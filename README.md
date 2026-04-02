@@ -1,163 +1,186 @@
 # gin-core
 
-Production-ready Go backend boilerplate built on Gin, following a strict layered architecture (Handler → Service → Repository) with compile-time dependency injection via Wire.
+生产级 Go 后端脚手架，基于 Gin 框架，遵循严格的分层架构（Handler → Service → Repository），通过 Wire 实现编译期依赖注入。
 
-## Architecture
+## 架构概览
 
 ```
-cmd/server/          Entry point
+cmd/server/          程序入口
 internal/
-  handler/           HTTP layer: bind → call service → respond
-  service/           Business logic, transactions, domain events
-  repository/        Data access (GORM), read/write split
-  middleware/        Auth, RBAC, rate limit, tracing, metrics, timeout
-  event/             In-process event bus + transactional outbox
-  worker/            Bounded async worker pool
-  scheduler/         Asynq periodic tasks with distributed lock
+  handler/           HTTP 层：绑定请求 → 调用服务 → 返回响应
+  service/           业务逻辑、事务编排、领域事件
+  repository/        数据访问（GORM）、读写分离
+  middleware/        认证、RBAC、限流、链路追踪、指标采集、超时控制
+  event/             进程内事件总线 + 事务性 Outbox
+  worker/            有界异步工作池
+  scheduler/         Asynq 定时任务 + 分布式锁
 pkg/
-  jwt/               Token generation, parsing, kid-based key rotation
-  cache/             Redis read-through, singleflight, distributed lock with watchdog
-  config/            Viper 3-layer config (YAML + ENV + runtime secrets)
-  errors/            Typed BizError with HTTP/business code mapping
-  response/          Unified JSON response format
-  metrics/           Prometheus registry and observation helpers
-  tracing/           OpenTelemetry setup, GORM/Redis hooks
-  storage/           File storage abstraction (local, S3)
-  i18n/              Error message localization (en, zh-CN)
-  mq/                Message queue publisher (RabbitMQ)
+  jwt/               令牌生成/解析、基于 kid 的密钥轮转
+  cache/             Redis 读穿缓存、singleflight、分布式锁（含看门狗续期）
+  config/            Viper 三层配置（YAML + 环境变量 + 运行时密钥注入）
+  errors/            类型化业务错误码，HTTP/业务码映射
+  response/          统一 JSON 响应格式
+  metrics/           Prometheus 指标注册与观测
+  tracing/           OpenTelemetry 初始化、GORM/Redis 链路钩子
+  storage/           文件存储抽象（本地、S3）
+  i18n/              错误消息国际化（en、zh-CN）
+  mq/                消息队列发布（RabbitMQ）
 ```
 
-## Quick Start
+## 快速启动
 
-### Docker Compose (recommended)
+### Docker Compose（推荐）
 
 ```bash
 docker compose up -d
 ```
 
-Starts PostgreSQL 16, Redis 7, and the app on `:8080` with auto-migration.
+自动启动 PostgreSQL 16、Redis 7 和应用服务，监听 `:8080`，开发环境自动执行数据库迁移。
 
-### Manual
+### 手动运行
 
 ```bash
-# Prerequisites: Go 1.24+, PostgreSQL, Redis
+# 前置条件：Go 1.24+、PostgreSQL、Redis
 
-# Set required secrets
+# 设置必需的密钥
 export APP_JWT_ACCESS_SECRET=your-access-secret
 export APP_JWT_REFRESH_SECRET=your-refresh-secret
 
-# Run
+# 启动
 go run ./cmd/server
 ```
 
-## Configuration
+## 配置管理
 
-Three-layer model:
+三层配置模型：
 
-| Layer | Source | Example |
-|-------|--------|---------|
-| Static | `config/config.yaml` | timeouts, pool sizes |
-| Environment | `APP_*` env vars | `APP_DB_HOST`, `APP_REDIS_ADDR` |
-| Secrets | Runtime injection only | `APP_JWT_ACCESS_SECRET` |
+| 层级 | 来源 | 示例 |
+|------|------|------|
+| 静态配置 | `config/config.yaml` | 超时时间、连接池大小 |
+| 环境配置 | `APP_*` 环境变量 | `APP_DB_HOST`、`APP_REDIS_ADDR` |
+| 密钥配置 | 仅运行时注入 | `APP_JWT_ACCESS_SECRET` |
 
-Secrets are **never** stored in config files. `config.Validate()` panics on missing required values at startup.
+密钥**绝不**写入配置文件。启动时 `config.Validate()` 校验所有必填项，缺失则立即 panic 阻止启动。
 
-## Key Features
+## 核心特性
 
-### Authentication & Authorization
-- JWT access/refresh token pair with `kid` header for zero-downtime key rotation
-- Redis-backed token blacklist for forced logout
-- Casbin RBAC with DB-backed policy hot-reload
+### 认证与授权
+- JWT 双令牌（Access + Refresh），通过 `kid` 头实现密钥零停机轮转
+- Redis 令牌黑名单，支持强制登出
+- Casbin RBAC，策略存储于数据库，运行时热加载
 
-### Caching
-- Redis read-through cache with singleflight (prevents thundering herd)
-- Null caching (prevents cache penetration)
-- TTL jitter (prevents cache avalanche)
-- Delayed double-delete for write-path consistency
+### 缓存策略
+- Redis 读穿缓存 + singleflight（防止缓存击穿/惊群效应）
+- 空值缓存（防止缓存穿透）
+- TTL 随机抖动（防止缓存雪崩）
+- 延迟双删（写路径一致性保障）
 
-### Distributed Lock
-- Redis SET NX with Lua-based atomic release
-- Watchdog auto-renewal for long-running critical sections
+### 分布式锁
+- Redis SET NX + Lua 原子释放
+- 看门狗自动续期，防止长任务锁过期
 
-### Rate Limiting
-- Redis sliding window (Lua script, atomic)
-- RFC 6585/7231 response headers (`X-RateLimit-*`, `Retry-After`)
-- Degrades open on Redis failure
+### 限流
+- Redis 滑动窗口（Lua 脚本，原子操作）
+- 符合 RFC 6585/7231 的响应头（`X-RateLimit-*`、`Retry-After`）
+- Redis 不可用时自动降级放行
 
-### Observability
-- Structured JSON logging (Zap) with trace ID on every entry
-- Prometheus metrics: HTTP, DB, cache, worker queue, goroutines
-- OpenTelemetry tracing with GORM and Redis hooks
-- Alertmanager rules for error rate, P99 latency, cache hit rate
+### 可观测性
+- 结构化 JSON 日志（Zap），每条日志携带 trace ID
+- Prometheus 指标：HTTP 请求、数据库查询、缓存命中、工作队列深度、goroutine 数量
+- OpenTelemetry 链路追踪，集成 GORM 和 Redis 钩子
+- Alertmanager 告警规则：错误率、P99 延迟、缓存命中率
 
-### Data Layer
-- GORM with connection pool tuning and read/write split via DBResolver
-- Transactional outbox for reliable event publishing
-- golang-migrate for versioned schema migrations
+### 数据层
+- GORM 连接池调优 + DBResolver 读写分离
+- 事务性 Outbox 模式，保证事件可靠发布
+- golang-migrate 版本化数据库迁移
 
-### Async Processing
-- Bounded worker pool with backpressure
-- Asynq scheduled tasks with distributed lock
-- In-process event bus with outbox dispatcher to MQ
+### 异步处理
+- 有界工作池，支持背压控制
+- Asynq 定时任务 + 分布式锁防重复执行
+- 进程内事件总线 + Outbox 分发器推送至 MQ
 
-## API Endpoints
+## API 接口
 
-| Method | Path | Auth | Description |
-|--------|------|------|-------------|
-| GET | `/healthz` | No | Liveness probe |
-| GET | `/readyz` | No | Readiness probe (DB + Redis) |
-| GET | `/metrics` | No | Prometheus metrics |
-| GET | `/swagger/*` | No | Swagger UI (dev/staging only) |
-| GET | `/api/v1/session` | Bearer | Current session |
-| GET | `/api/v1/users/me` | Bearer | User profile |
-| PATCH | `/api/v1/users/me` | Bearer | Update profile |
-| GET | `/api/v1/admin/session` | Bearer + RBAC | Admin session (audited) |
+| 方法 | 路径 | 认证 | 说明 |
+|------|------|------|------|
+| GET | `/healthz` | 无 | 存活探针 |
+| GET | `/readyz` | 无 | 就绪探针（检查 DB + Redis） |
+| GET | `/metrics` | 无 | Prometheus 指标 |
+| GET | `/swagger/*` | 无 | Swagger 文档（仅 dev/staging） |
+| GET | `/api/v1/session` | Bearer | 当前会话 |
+| GET | `/api/v1/users/me` | Bearer | 用户信息 |
+| PATCH | `/api/v1/users/me` | Bearer | 更新用户信息 |
+| GET | `/api/v1/admin/session` | Bearer + RBAC | 管理员会话（记录审计日志） |
 
-## Middleware Chain
+## 中间件链
 
-Registered in this exact order:
+按以下严格顺序注册：
 
-1. **Recovery** — catch panics
-2. **RequestID** — generate trace ID
-3. **Timeout** — 30s parent context deadline
-4. **Tracing** — OpenTelemetry span
-5. **Metrics** — request instrumentation
-6. **Logger** — structured access log
-7. **Locale** — i18n from Accept-Language
-8. **CORS** — preflight handling
-9. **RateLimiter** — sliding window per IP
-10. **Auth** — JWT validation (route-group scoped)
-11. **RBAC** — Casbin enforcement (admin-group scoped)
+1. **Recovery** — 捕获 panic
+2. **RequestID** — 生成 trace ID
+3. **Timeout** — 30 秒请求级 context 超时上限
+4. **Tracing** — OpenTelemetry 创建根 span
+5. **Metrics** — 请求指标采集
+6. **Logger** — 结构化访问日志
+7. **Locale** — 从 Accept-Language 解析语言
+8. **CORS** — 处理预检请求
+9. **RateLimiter** — 按 IP 滑动窗口限流
+10. **Auth** — JWT 验证（路由组级别）
+11. **RBAC** — Casbin 权限校验（管理员路由组级别）
 
-## Testing
+## 测试
 
 ```bash
 go test ./...
 ```
 
-27 test files across 15 packages covering handler, service, middleware, cache, config, JWT, tracing, and more.
+27 个测试文件，覆盖 15 个包：handler、service、middleware、cache、config、JWT、tracing 等。
 
-Coverage gate: `internal/service/` must maintain ≥70% (enforced in CI).
+覆盖率门槛：`internal/service/` 必须 ≥70%（CI 强制执行）。
 
-## CI
+## CI 流水线
 
-GitHub Actions runs on every push to `master`:
+每次推送至 `master` 自动执行：
 
-- golangci-lint (errcheck, gosec, contextcheck, etc.)
+- golangci-lint（errcheck、gosec、contextcheck 等）
 - go vet
-- Unit tests
-- Service coverage gate (≥70%)
-- govulncheck
-- Wire generation drift check
-- Swagger generation drift check
+- 单元测试
+- Service 层覆盖率检查（≥70%）
+- govulncheck 漏洞扫描
+- Wire 代码生成一致性检查
+- Swagger 文档一致性检查
 
-## Project Structure Conventions
+## 项目规范
 
-- `internal/` is Go-private — no external imports allowed
-- `pkg/` contains only generic utilities, no business logic
-- Handlers do exactly three things: bind, call service, respond
-- All secrets injected at runtime via env vars, never in config files
-- Conventional Commits: `feat:`, `fix:`, `refactor:`, `test:`, `chore:`
+- `internal/` 利用 Go 的包可见性机制，禁止外部导入
+- `pkg/` 仅包含通用工具，不含业务逻辑
+- Handler 只做三件事：绑定输入、调用服务、返回响应
+- 所有密钥通过运行时环境变量注入，绝不写入配置文件
+- 提交信息遵循 Conventional Commits：`feat:`、`fix:`、`refactor:`、`test:`、`chore:`
+
+## 技术栈
+
+| 关注点 | 技术选型 |
+|--------|----------|
+| HTTP 框架 | Gin |
+| ORM | GORM + PostgreSQL |
+| 配置 | Viper |
+| 依赖注入 | Wire（编译期） |
+| 日志 | Zap |
+| JWT | golang-jwt/jwt/v5 |
+| RBAC | Casbin |
+| 缓存 | go-redis/v9 |
+| 限流 | Redis Lua 滑动窗口 |
+| 链路追踪 | OpenTelemetry |
+| 指标 | Prometheus |
+| 定时任务 | Asynq |
+| 消息队列 | RabbitMQ |
+| 数据库迁移 | golang-migrate |
+| 文件存储 | 本地 / AWS S3 |
+| 国际化 | go-i18n |
+| Swagger | swaggo/swag |
+| Lint | golangci-lint |
 
 ## License
 
