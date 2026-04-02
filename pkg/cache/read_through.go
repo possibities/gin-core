@@ -101,7 +101,7 @@ func (s *ReadThroughStore) Delete(ctx context.Context, key string) error {
 // where a concurrent read re-populates stale data between the DB write and
 // the cache delete. The second delete runs in a background goroutine and
 // uses a detached context so it is not cancelled by the parent request.
-func (s *ReadThroughStore) DeleteWithDoubleDelete(ctx context.Context, key string, delay time.Duration) error {
+func (s *ReadThroughStore) DeleteWithDoubleDelete(ctx context.Context, key string, delay time.Duration) error { //nolint:contextcheck // second delete intentionally detached from request lifecycle
 	if err := s.client.Del(ctx, key).Err(); err != nil {
 		return err
 	}

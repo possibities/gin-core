@@ -31,12 +31,12 @@ type DistributedLocker struct {
 }
 
 type Lock struct {
-	client  redis.UniversalClient
-	key     string
-	token   string
-	ttl     time.Duration
-	stopCh  chan struct{}
-	doneCh  chan struct{}
+	client redis.UniversalClient
+	key    string
+	token  string
+	ttl    time.Duration
+	stopCh chan struct{}
+	doneCh chan struct{}
 }
 
 func NewDistributedLocker(client *redis.Client, keys *Keyspace) *DistributedLocker {
@@ -71,7 +71,7 @@ func (l *DistributedLocker) Acquire(ctx context.Context, resource string, ttl ti
 // StartWatchdog begins a background goroutine that renews the lock every ttl/3.
 // If renewal fails, the provided cancel function is called to abort the critical section.
 // Call StopWatchdog when the critical section completes.
-func (l *Lock) StartWatchdog(cancel context.CancelFunc) {
+func (l *Lock) StartWatchdog(cancel context.CancelFunc) { //nolint:contextcheck // intentionally detached from request context
 	interval := l.ttl / 3
 	if interval <= 0 {
 		interval = time.Second

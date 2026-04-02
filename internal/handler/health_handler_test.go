@@ -16,8 +16,8 @@ type stubChecker struct {
 	err  error
 }
 
-func (s *stubChecker) Name() string  { return s.name }
-func (s *stubChecker) Check() error  { return s.err }
+func (s *stubChecker) Name() string { return s.name }
+func (s *stubChecker) Check() error { return s.err }
 
 func TestHealthzReturnsOK(t *testing.T) {
 	gin.SetMode(gin.TestMode)
