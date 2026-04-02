@@ -1,0 +1,244 @@
+basePath: /
+definitions:
+  internal_handler.errorResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+      trace_id:
+        type: string
+    type: object
+  internal_handler.healthStatusDoc:
+    properties:
+      status:
+        type: string
+    type: object
+  internal_handler.sessionDoc:
+    properties:
+      role:
+        type: string
+      scope:
+        type: string
+      tenant_id:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  internal_handler.successResponseHealth:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/internal_handler.healthStatusDoc'
+      message:
+        type: string
+      trace_id:
+        type: string
+    type: object
+  internal_handler.successResponseSession:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/internal_handler.sessionDoc'
+      message:
+        type: string
+      trace_id:
+        type: string
+    type: object
+  internal_handler.successResponseUserProfile:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/internal_handler.userProfileDoc'
+      message:
+        type: string
+      trace_id:
+        type: string
+    type: object
+  internal_handler.updateUserProfileRequest:
+    properties:
+      email:
+        maxLength: 255
+        type: string
+      name:
+        maxLength: 128
+        type: string
+      tenant_id:
+        maxLength: 64
+        type: string
+    required:
+    - email
+    - name
+    type: object
+  internal_handler.userProfileDoc:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      role:
+        type: string
+      tenant_id:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Enterprise Gin boilerplate API.
+  title: Gin Boilerplate API
+  version: "1.0"
+paths:
+  /api/v1/admin/session:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handler.successResponseSession'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Current admin session
+      tags:
+      - admin
+  /api/v1/session:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handler.successResponseSession'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Current session
+      tags:
+      - session
+  /api/v1/users/me:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handler.successResponseUserProfile'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Current user profile
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Update user profile request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_handler.updateUserProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handler.successResponseUserProfile'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update current user profile
+      tags:
+      - users
+  /healthz:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handler.successResponseHealth'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+      summary: Liveness probe
+      tags:
+      - health
+  /readyz:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_handler.successResponseHealth'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/internal_handler.errorResponse'
+      summary: Readiness probe
+      tags:
+      - health
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

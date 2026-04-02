@@ -1,0 +1,37 @@
+# Build output
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test output
+*.out
+*.test
+*.prof
+
+# Go workspace
+vendor/
+.gocache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AI tool local state
+.claude/
+.codex-write-probe
+
+# Environment / secrets
+.env
+.env.*
+
+# Local data
+data/

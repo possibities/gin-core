@@ -1,0 +1,47 @@
+- id: response.success
+  translation: success
+
+- id: errors.common.not_found
+  translation: resource not found
+
+- id: errors.common.unauthorized
+  translation: unauthorized
+
+- id: errors.common.token_invalid
+  translation: invalid or expired token
+
+- id: errors.common.token_blacklisted
+  translation: token has been revoked
+
+- id: errors.common.forbidden
+  translation: forbidden
+
+- id: errors.common.shutting_down
+  translation: service is shutting down
+
+- id: errors.common.dependency_not_ready
+  translation: dependencies are not ready
+
+- id: errors.common.too_many_requests
+  translation: too many requests
+
+- id: errors.common.invalid_request
+  translation: invalid request
+
+- id: errors.common.internal
+  translation: internal server error
+
+- id: errors.user.email_exists
+  translation: email already exists
+
+- id: validation.required
+  translation: "{{.Field}} is required"
+
+- id: validation.email
+  translation: "{{.Field}} must be a valid email address"
+
+- id: validation.max
+  translation: "{{.Field}} must be at most {{.Max}} characters"
+
+- id: validation.invalid
+  translation: "{{.Field}} is invalid"

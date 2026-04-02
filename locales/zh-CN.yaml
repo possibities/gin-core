@@ -1,0 +1,47 @@
+- id: response.success
+  translation: 成功
+
+- id: errors.common.not_found
+  translation: 资源不存在
+
+- id: errors.common.unauthorized
+  translation: 未授权
+
+- id: errors.common.token_invalid
+  translation: 无效或已过期的令牌
+
+- id: errors.common.token_blacklisted
+  translation: 令牌已失效
+
+- id: errors.common.forbidden
+  translation: 禁止访问
+
+- id: errors.common.shutting_down
+  translation: 服务正在关闭
+
+- id: errors.common.dependency_not_ready
+  translation: 依赖尚未就绪
+
+- id: errors.common.too_many_requests
+  translation: 请求过于频繁
+
+- id: errors.common.invalid_request
+  translation: 请求参数无效
+
+- id: errors.common.internal
+  translation: 服务器内部错误
+
+- id: errors.user.email_exists
+  translation: 邮箱已存在
+
+- id: validation.required
+  translation: "{{.Field}} 为必填项"
+
+- id: validation.email
+  translation: "{{.Field}} 必须是有效的邮箱地址"
+
+- id: validation.max
+  translation: "{{.Field}} 长度不能超过 {{.Max}} 个字符"
+
+- id: validation.invalid
+  translation: "{{.Field}} 无效"

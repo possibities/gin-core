@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25.8'
+          cache: true
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.64.8
+          args: --timeout=5m
+
+      - name: Go vet
+        run: go vet ./...
+
+      - name: Unit tests
+        run: go test ./...
+
+      - name: Service coverage gate
+        shell: bash
+        run: |
+          go test ./internal/service/... -coverprofile=service.cover.out
+          total=$(go tool cover -func=service.cover.out | awk '/total:/ {gsub("%", "", $3); print $3}')
+          awk -v total="$total" 'BEGIN { if (total < 70) { printf("service coverage %.2f%% is below 70%%\n", total); exit 1 } }'
+
+      - name: Vulnerability scan
+        run: go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 ./...
+
+      - name: Wire generation check
+        run: |
+          go run github.com/google/wire/cmd/wire@v0.7.0 ./internal
+          git diff --exit-code -- internal/wire_gen.go
+
+      - name: Swagger generation check
+        run: |
+          go run github.com/swaggo/swag/cmd/swag@v1.16.6 init -g cmd/server/main.go -o docs --parseDependency --parseInternal
+          git diff --exit-code -- docs

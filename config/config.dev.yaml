@@ -1,0 +1,88 @@
+app:
+  env: dev
+
+db:
+  host: 127.0.0.1
+  port: 5432
+  user: postgres
+  password: ""
+  name: gin_boilerplate
+  ssl_mode: disable
+  dial_timeout_sec: 2
+  max_open_conns: 25
+  max_idle_conns: 12
+  conn_max_lifetime_sec: 300
+  conn_max_idle_time_sec: 180
+
+migration:
+  auto_run: true
+  table: schema_migrations
+  timeout_sec: 30
+  statement_timeout_sec: 5
+
+redis:
+  addr: 127.0.0.1:6379
+  password: ""
+  db: 0
+  dial_timeout_sec: 2
+  read_timeout_sec: 2
+  write_timeout_sec: 2
+
+cache:
+  null_ttl_sec: 30
+  ttl_jitter_sec: 60
+
+jwt:
+  issuer: gin-boilerplate
+  access_ttl_sec: 7200
+  refresh_ttl_sec: 604800
+
+log:
+  level: debug
+  encoding: json
+
+tracing:
+  enabled: true
+  endpoint: ""
+  insecure: true
+  sample_ratio: 1.0
+  timeout_sec: 5
+
+rbac:
+  enabled: true
+  autoload_interval_sec: 15
+
+rate_limit:
+  enabled: true
+  rps: 40
+  burst: 80
+  window_sec: 1
+
+worker:
+  workers: 4
+  queue_size: 128
+  submit_timeout_ms: 100
+
+storage:
+  driver: local
+  local_dir: data/files
+  public_base_url: /files
+
+mq:
+  enabled: false
+  driver: rabbitmq
+  exchange: app.events
+  publish_timeout_ms: 2000
+  operation_timeout_ms: 2000
+  poll_interval_ms: 1000
+  batch_size: 50
+  max_attempts: 10
+  lock_timeout_sec: 30
+
+scheduler:
+  enabled: false
+  queue: scheduler
+  concurrency: 4
+  task_timeout_sec: 30
+  lock_ttl_sec: 30
+  outbox_dispatch_cron: "@every 5s"
