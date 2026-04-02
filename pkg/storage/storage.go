@@ -22,6 +22,8 @@ func NewFileStorage(cfg *config.Config) (FileStorage, error) {
 	switch strings.ToLower(strings.TrimSpace(cfg.Storage.Driver)) {
 	case "local":
 		return NewLocalFileStorage(cfg)
+	case "s3":
+		return NewS3FileStorage(cfg)
 	default:
 		return nil, ErrUnsupportedDriver
 	}

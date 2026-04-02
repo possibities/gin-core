@@ -119,6 +119,10 @@ type StorageConfig struct {
 	LocalDir        string `mapstructure:"local_dir"`
 	PublicBaseURL   string `mapstructure:"public_base_url"`
 	SignedURLSecret string `mapstructure:"signed_url_secret"`
+	S3Bucket        string `mapstructure:"s3_bucket"`
+	S3Region        string `mapstructure:"s3_region"`
+	S3Endpoint      string `mapstructure:"s3_endpoint"`
+	S3ForcePathStyle bool  `mapstructure:"s3_force_path_style"`
 }
 
 type MQConfig struct {
@@ -456,6 +460,14 @@ func (c *Config) validateStorage() error {
 		}
 		if strings.TrimSpace(c.Storage.PublicBaseURL) == "" {
 			return fmt.Errorf("storage.public_base_url is required")
+		}
+		return nil
+	case "s3":
+		if strings.TrimSpace(c.Storage.S3Bucket) == "" {
+			return fmt.Errorf("storage.s3_bucket is required")
+		}
+		if strings.TrimSpace(c.Storage.S3Region) == "" {
+			return fmt.Errorf("storage.s3_region is required")
 		}
 		return nil
 	default:
