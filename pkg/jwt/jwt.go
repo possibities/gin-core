@@ -9,8 +9,8 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
+	"github.com/possibities/gin-core/pkg/config"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
 )
 
 const (

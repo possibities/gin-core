@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/pkg/cache"
+	"github.com/possibities/gin-core/pkg/cache"
 	"github.com/redis/go-redis/v9"
 )
 

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	pkgtracing "github.com/possibities/gin-boilerplate/pkg/tracing"
+	pkgtracing "github.com/possibities/gin-core/pkg/tracing"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"

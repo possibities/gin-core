@@ -6,12 +6,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/internal/event"
-	"github.com/possibities/gin-boilerplate/internal/model"
-	"github.com/possibities/gin-boilerplate/internal/repository"
-	"github.com/possibities/gin-boilerplate/pkg/cache"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
+	"github.com/possibities/gin-core/internal/event"
+	"github.com/possibities/gin-core/internal/model"
+	"github.com/possibities/gin-core/internal/repository"
+	"github.com/possibities/gin-core/pkg/cache"
+	"github.com/possibities/gin-core/pkg/config"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
 	"gorm.io/gorm"
 )
 
@@ -169,7 +169,7 @@ func TestUserServiceGetProfileLoadsAndMapsUser(t *testing.T) {
 	}
 
 	svc := NewUserService(repo, &stubOutboxRepository{}, &stubTxManager{}, cacheStore, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{})
 
 	profile, err := svc.GetProfile(context.Background(), 42)
@@ -187,7 +187,7 @@ func TestUserServiceGetProfileReturnsNotFoundOnCachedNull(t *testing.T) {
 			return cache.LookupNull, nil
 		},
 	}, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{})
 
 	_, err := svc.GetProfile(context.Background(), 7)
@@ -248,7 +248,7 @@ func TestUserServiceUpdateProfileInvalidatesCache(t *testing.T) {
 			return nil
 		},
 	}, &stubTxManager{}, cacheStore, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{
 		publish: func(_ context.Context, message event.Message) error {
 			evt, ok := message.(UserProfileUpdatedEvent)
@@ -276,7 +276,7 @@ func TestUserServiceUpdateProfileInvalidatesCache(t *testing.T) {
 	if updatedEmail != "alice@example.com" || updatedName != "Alice Updated" || updatedTenant != "tenant-b" {
 		t.Fatalf("unexpected updated values: %q %q %q", updatedEmail, updatedName, updatedTenant)
 	}
-	if deletedKey != "gin-boilerplate:user:profile:42" {
+	if deletedKey != "gin-core:user:profile:42" {
 		t.Fatalf("expected profile cache invalidation, got %q", deletedKey)
 	}
 	if outboxTopic != userProfileUpdatedMQTopic {
@@ -298,7 +298,7 @@ func TestUserServiceUpdateProfileReturnsConflict(t *testing.T) {
 	}
 
 	svc := NewUserService(repo, &stubOutboxRepository{}, &stubTxManager{}, &stubReadStore{}, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{})
 
 	_, err := svc.UpdateProfile(context.Background(), 42, UpdateUserProfileInput{
@@ -337,7 +337,7 @@ func TestUserServiceUpdateProfileIgnoresCacheDeleteFailure(t *testing.T) {
 			return errors.New("redis down")
 		},
 	}, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{})
 
 	if _, err := svc.UpdateProfile(context.Background(), 42, UpdateUserProfileInput{
@@ -352,7 +352,7 @@ func TestUserServiceUpdateProfileIgnoresCacheDeleteFailure(t *testing.T) {
 
 func TestUserServiceUpdateProfileRejectsBlankFields(t *testing.T) {
 	svc := NewUserService(&stubUserRepository{}, &stubOutboxRepository{}, &stubTxManager{}, &stubReadStore{}, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{})
 
 	_, err := svc.UpdateProfile(context.Background(), 42, UpdateUserProfileInput{
@@ -368,7 +368,7 @@ func TestUserServiceUpdateProfileRejectsBlankFields(t *testing.T) {
 
 func TestUserServiceUpdateProfileRejectsInvalidEmailFormat(t *testing.T) {
 	svc := NewUserService(&stubUserRepository{}, &stubOutboxRepository{}, &stubTxManager{}, &stubReadStore{}, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{})
 
 	_, err := svc.UpdateProfile(context.Background(), 42, UpdateUserProfileInput{
@@ -403,7 +403,7 @@ func TestUserServiceUpdateProfileIgnoresPublishFailure(t *testing.T) {
 	}
 
 	svc := NewUserService(repo, &stubOutboxRepository{}, &stubTxManager{}, &stubReadStore{}, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{
 		publish: func(context.Context, event.Message) error {
 			return pkgerrors.ErrTooManyRequests
@@ -435,7 +435,7 @@ func TestUserServiceUpdateProfileReturnsOutboxCreateError(t *testing.T) {
 			return pkgerrors.ErrInternal
 		},
 	}, &stubTxManager{}, &stubReadStore{}, cache.NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}), &stubPublisher{})
 
 	if _, err := svc.UpdateProfile(context.Background(), 42, UpdateUserProfileInput{

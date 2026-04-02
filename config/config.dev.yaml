@@ -6,7 +6,7 @@ db:
   port: 5432
   user: postgres
   password: ""
-  name: gin_boilerplate
+  name: gin_core
   ssl_mode: disable
   dial_timeout_sec: 2
   max_open_conns: 25
@@ -33,7 +33,7 @@ cache:
   ttl_jitter_sec: 60
 
 jwt:
-  issuer: gin-boilerplate
+  issuer: gin-core
   access_ttl_sec: 7200
   refresh_ttl_sec: 604800
 

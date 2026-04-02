@@ -11,8 +11,8 @@ import (
 	migratepostgres "github.com/golang-migrate/migrate/v4/database/postgres"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	_ "github.com/lib/pq" // Register postgres driver for database/sql migrations.
-	projectmigrations "github.com/possibities/gin-boilerplate/migrations"
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	projectmigrations "github.com/possibities/gin-core/migrations"
+	"github.com/possibities/gin-core/pkg/config"
 )
 
 type Migrator struct {

@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	pkgi18n "github.com/possibities/gin-boilerplate/pkg/i18n"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	pkgi18n "github.com/possibities/gin-core/pkg/i18n"
 )
 
 func TestSuccessIncludesTraceID(t *testing.T) {

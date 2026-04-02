@@ -11,10 +11,10 @@ import (
 	"time"
 
 	"github.com/golang-migrate/migrate/v4"
-	docs "github.com/possibities/gin-boilerplate/docs"
-	"github.com/possibities/gin-boilerplate/internal"
-	internalmigration "github.com/possibities/gin-boilerplate/internal/migration"
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	docs "github.com/possibities/gin-core/docs"
+	"github.com/possibities/gin-core/internal"
+	internalmigration "github.com/possibities/gin-core/internal/migration"
+	"github.com/possibities/gin-core/pkg/config"
 	"go.uber.org/zap"
 )
 

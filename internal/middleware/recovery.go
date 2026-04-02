@@ -2,9 +2,9 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
-	"github.com/possibities/gin-boilerplate/pkg/response"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
+	"github.com/possibities/gin-core/pkg/response"
 	"go.uber.org/zap"
 )
 

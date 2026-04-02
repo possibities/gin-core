@@ -4,8 +4,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
-	pkgtracing "github.com/possibities/gin-boilerplate/pkg/tracing"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
+	pkgtracing "github.com/possibities/gin-core/pkg/tracing"
 	"go.uber.org/zap"
 )
 

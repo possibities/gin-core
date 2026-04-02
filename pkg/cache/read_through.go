@@ -10,8 +10,8 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	"github.com/possibities/gin-boilerplate/pkg/metrics"
+	"github.com/possibities/gin-core/pkg/config"
+	"github.com/possibities/gin-core/pkg/metrics"
 	"github.com/redis/go-redis/v9"
 	"golang.org/x/sync/singleflight"
 )

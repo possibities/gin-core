@@ -9,10 +9,10 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/internal/middleware"
-	"github.com/possibities/gin-boilerplate/internal/model"
-	"github.com/possibities/gin-boilerplate/internal/service"
-	"github.com/possibities/gin-boilerplate/pkg/response"
+	"github.com/possibities/gin-core/internal/middleware"
+	"github.com/possibities/gin-core/internal/model"
+	"github.com/possibities/gin-core/internal/service"
+	"github.com/possibities/gin-core/pkg/response"
 )
 
 type stubAuditLogRepo struct {

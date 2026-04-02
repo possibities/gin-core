@@ -2,10 +2,10 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/internal/middleware"
-	"github.com/possibities/gin-boilerplate/internal/service"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	"github.com/possibities/gin-boilerplate/pkg/response"
+	"github.com/possibities/gin-core/internal/middleware"
+	"github.com/possibities/gin-core/internal/service"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	"github.com/possibities/gin-core/pkg/response"
 )
 
 type UserHandler struct {

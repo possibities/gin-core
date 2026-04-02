@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkgtracing "github.com/possibities/gin-boilerplate/pkg/tracing"
+	"github.com/possibities/gin-core/pkg/config"
+	pkgtracing "github.com/possibities/gin-core/pkg/tracing"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"

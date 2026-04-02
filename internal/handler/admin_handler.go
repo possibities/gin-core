@@ -2,10 +2,10 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/internal/middleware"
-	"github.com/possibities/gin-boilerplate/internal/service"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
-	"github.com/possibities/gin-boilerplate/pkg/response"
+	"github.com/possibities/gin-core/internal/middleware"
+	"github.com/possibities/gin-core/internal/service"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
+	"github.com/possibities/gin-core/pkg/response"
 	"go.uber.org/zap"
 )
 

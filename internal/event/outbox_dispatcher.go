@@ -7,11 +7,11 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/possibities/gin-boilerplate/internal/model"
-	"github.com/possibities/gin-boilerplate/internal/repository"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	"github.com/possibities/gin-boilerplate/pkg/metrics"
-	"github.com/possibities/gin-boilerplate/pkg/mq"
+	"github.com/possibities/gin-core/internal/model"
+	"github.com/possibities/gin-core/internal/repository"
+	"github.com/possibities/gin-core/pkg/config"
+	"github.com/possibities/gin-core/pkg/metrics"
+	"github.com/possibities/gin-core/pkg/mq"
 	"go.uber.org/zap"
 )
 

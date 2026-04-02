@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/possibities/gin-boilerplate/internal/model"
+	"github.com/possibities/gin-core/internal/model"
 	"gorm.io/gorm"
 )
 

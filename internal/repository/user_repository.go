@@ -5,8 +5,8 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/possibities/gin-boilerplate/internal/model"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
+	"github.com/possibities/gin-core/internal/model"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
 	"gorm.io/gorm"
 )
 

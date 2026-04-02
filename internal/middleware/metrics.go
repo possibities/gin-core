@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/pkg/metrics"
+	"github.com/possibities/gin-core/pkg/metrics"
 )
 
 func Metrics(registry *metrics.Registry) gin.HandlerFunc {

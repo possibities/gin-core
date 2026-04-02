@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/possibities/gin-boilerplate/internal/model"
+	"github.com/possibities/gin-core/internal/model"
 )
 
 type stubAuditLogRepository struct {

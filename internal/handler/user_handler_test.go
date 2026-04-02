@@ -9,10 +9,10 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/internal/middleware"
-	"github.com/possibities/gin-boilerplate/internal/service"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	pkgi18n "github.com/possibities/gin-boilerplate/pkg/i18n"
+	"github.com/possibities/gin-core/internal/middleware"
+	"github.com/possibities/gin-core/internal/service"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	pkgi18n "github.com/possibities/gin-core/pkg/i18n"
 )
 
 type stubUserService struct {

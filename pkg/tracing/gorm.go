@@ -3,8 +3,8 @@ package tracing
 import (
 	"time"
 
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
-	"github.com/possibities/gin-boilerplate/pkg/metrics"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
+	"github.com/possibities/gin-core/pkg/metrics"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"

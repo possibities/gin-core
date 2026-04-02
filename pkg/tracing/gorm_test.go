@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/glebarez/sqlite"
-	"github.com/possibities/gin-boilerplate/pkg/metrics"
+	"github.com/possibities/gin-core/pkg/metrics"
 	"gorm.io/gorm"
 )
 

@@ -5,11 +5,11 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/possibities/gin-boilerplate/internal/event"
-	"github.com/possibities/gin-boilerplate/internal/handler"
-	"github.com/possibities/gin-boilerplate/internal/scheduler"
-	"github.com/possibities/gin-boilerplate/internal/service"
-	"github.com/possibities/gin-boilerplate/internal/worker"
+	"github.com/possibities/gin-core/internal/event"
+	"github.com/possibities/gin-core/internal/handler"
+	"github.com/possibities/gin-core/internal/scheduler"
+	"github.com/possibities/gin-core/internal/service"
+	"github.com/possibities/gin-core/internal/worker"
 	"go.uber.org/zap"
 )
 

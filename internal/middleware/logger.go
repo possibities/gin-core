@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
 	"go.uber.org/zap"
 )
 

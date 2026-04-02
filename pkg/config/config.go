@@ -207,7 +207,7 @@ func load(validate func(*Config) error) (*Config, error) {
 }
 
 func setDefaults(v *viper.Viper) {
-	v.SetDefault("app.name", "gin-boilerplate")
+	v.SetDefault("app.name", "gin-core")
 	v.SetDefault("app.env", "dev")
 	v.SetDefault("app.host", "0.0.0.0")
 	v.SetDefault("app.port", 8080)
@@ -219,7 +219,7 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("db.port", 5432)
 	v.SetDefault("db.user", "postgres")
 	v.SetDefault("db.password", "")
-	v.SetDefault("db.name", "gin_boilerplate")
+	v.SetDefault("db.name", "gin_core")
 	v.SetDefault("db.ssl_mode", "disable")
 	v.SetDefault("db.dial_timeout_sec", 2)
 	v.SetDefault("db.max_open_conns", 25)
@@ -238,7 +238,7 @@ func setDefaults(v *viper.Viper) {
 	v.SetDefault("redis.write_timeout_sec", 2)
 	v.SetDefault("cache.null_ttl_sec", 30)
 	v.SetDefault("cache.ttl_jitter_sec", 60)
-	v.SetDefault("jwt.issuer", "gin-boilerplate")
+	v.SetDefault("jwt.issuer", "gin-core")
 	v.SetDefault("jwt.access_ttl_sec", 7200)
 	v.SetDefault("jwt.refresh_ttl_sec", 604800)
 	v.SetDefault("log.level", "info")

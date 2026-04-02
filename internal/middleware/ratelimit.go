@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/pkg/cache"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
-	"github.com/possibities/gin-boilerplate/pkg/response"
+	"github.com/possibities/gin-core/pkg/cache"
+	"github.com/possibities/gin-core/pkg/config"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
+	"github.com/possibities/gin-core/pkg/response"
 	"go.uber.org/zap"
 )
 

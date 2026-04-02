@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/pkg/response"
+	"github.com/possibities/gin-core/pkg/response"
 )
 
 type stubChecker struct {

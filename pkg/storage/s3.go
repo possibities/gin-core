@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	awsconfig "github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	"github.com/possibities/gin-core/pkg/config"
 )
 
 type S3FileStorage struct {

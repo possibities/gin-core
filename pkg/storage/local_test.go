@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	"github.com/possibities/gin-core/pkg/config"
 )
 
 func TestLocalFileStorageUploadDownloadDelete(t *testing.T) {

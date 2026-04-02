@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
+	"github.com/possibities/gin-core/pkg/config"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
 	"go.uber.org/zap"
 )
 

@@ -7,12 +7,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/internal/event"
-	"github.com/possibities/gin-boilerplate/internal/model"
-	"github.com/possibities/gin-boilerplate/internal/repository"
-	"github.com/possibities/gin-boilerplate/pkg/cache"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
+	"github.com/possibities/gin-core/internal/event"
+	"github.com/possibities/gin-core/internal/model"
+	"github.com/possibities/gin-core/internal/repository"
+	"github.com/possibities/gin-core/pkg/cache"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/alicebob/miniredis/v2"
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	"github.com/possibities/gin-core/pkg/config"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -19,7 +19,7 @@ func TestDistributedLockerAcquireAndRelease(t *testing.T) {
 	})
 
 	locker := NewDistributedLocker(client, NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}))
 
 	lock, err := locker.Acquire(context.Background(), "scheduler:outbox-dispatch", 10*time.Second)
@@ -48,7 +48,7 @@ func TestDistributedLockerReleaseDoesNotDeleteForeignToken(t *testing.T) {
 	})
 
 	locker := NewDistributedLocker(client, NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}))
 
 	lock, err := locker.Acquire(context.Background(), "scheduler:outbox-dispatch", 10*time.Second)
@@ -82,7 +82,7 @@ func TestDistributedLockerWithLockReleasesOnPanic(t *testing.T) {
 	})
 
 	locker := NewDistributedLocker(client, NewKeyspace(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 	}))
 
 	defer func() {

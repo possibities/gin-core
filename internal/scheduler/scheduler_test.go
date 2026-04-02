@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/hibiken/asynq"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	"github.com/possibities/gin-boilerplate/pkg/metrics"
+	"github.com/possibities/gin-core/pkg/config"
+	"github.com/possibities/gin-core/pkg/metrics"
 	"go.uber.org/zap"
 )
 

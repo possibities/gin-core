@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"github.com/hibiken/asynq"
-	"github.com/possibities/gin-boilerplate/internal/event"
-	"github.com/possibities/gin-boilerplate/pkg/cache"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
-	"github.com/possibities/gin-boilerplate/pkg/metrics"
+	"github.com/possibities/gin-core/internal/event"
+	"github.com/possibities/gin-core/pkg/cache"
+	"github.com/possibities/gin-core/pkg/config"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
+	"github.com/possibities/gin-core/pkg/metrics"
 	"go.uber.org/zap"
 )
 

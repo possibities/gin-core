@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	"github.com/possibities/gin-boilerplate/pkg/response"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	"github.com/possibities/gin-core/pkg/response"
 )
 
 type stubEnforcer struct {

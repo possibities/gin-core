@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	"github.com/possibities/gin-core/pkg/config"
 )
 
 type Keyspace struct {

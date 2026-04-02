@@ -14,8 +14,8 @@ import (
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	goi18n "github.com/nicksnyder/go-i18n/v2/i18n"
-	"github.com/possibities/gin-boilerplate/locales"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
+	"github.com/possibities/gin-core/locales"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
 	"golang.org/x/text/language"
 	"gopkg.in/yaml.v3"
 )

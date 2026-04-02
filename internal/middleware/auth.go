@@ -4,9 +4,9 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	pkgjwt "github.com/possibities/gin-boilerplate/pkg/jwt"
-	"github.com/possibities/gin-boilerplate/pkg/response"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	pkgjwt "github.com/possibities/gin-core/pkg/jwt"
+	"github.com/possibities/gin-core/pkg/response"
 )
 
 const (

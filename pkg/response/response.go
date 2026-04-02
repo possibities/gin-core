@@ -9,9 +9,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
-	pkgi18n "github.com/possibities/gin-boilerplate/pkg/i18n"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
+	pkgi18n "github.com/possibities/gin-core/pkg/i18n"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
 	"go.uber.org/zap"
 )
 

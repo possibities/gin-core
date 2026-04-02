@@ -4,8 +4,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/possibities/gin-boilerplate/internal/worker"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
+	"github.com/possibities/gin-core/internal/worker"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
 	"go.uber.org/zap"
 )
 

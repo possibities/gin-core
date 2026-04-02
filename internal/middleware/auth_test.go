@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkgjwt "github.com/possibities/gin-boilerplate/pkg/jwt"
+	"github.com/possibities/gin-core/pkg/config"
+	pkgjwt "github.com/possibities/gin-core/pkg/jwt"
 )
 
 type testBlacklistStore struct{}
@@ -89,9 +89,9 @@ func TestAuthMiddlewareInjectsClaimsIntoContext(t *testing.T) {
 
 func newTestTokenManager() *pkgjwt.Manager {
 	return pkgjwt.NewManager(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 		JWT: config.JWTConfig{
-			Issuer:        "gin-boilerplate",
+			Issuer:        "gin-core",
 			AccessTTLSec:  300,
 			RefreshTTLSec: 600,
 			AccessSecret:  "access-secret",

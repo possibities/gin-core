@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/pkg/cache"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkgerrors "github.com/possibities/gin-boilerplate/pkg/errors"
+	"github.com/possibities/gin-core/pkg/cache"
+	"github.com/possibities/gin-core/pkg/config"
+	pkgerrors "github.com/possibities/gin-core/pkg/errors"
 )
 
 type memoryBlacklistStore struct {
@@ -114,7 +114,7 @@ func TestManagerRejectsTokenWithUnexpectedAudience(t *testing.T) {
 	otherAudienceManager := NewManager(&config.Config{
 		App: config.AppConfig{Name: "another-service"},
 		JWT: config.JWTConfig{
-			Issuer:                "gin-boilerplate",
+			Issuer:                "gin-core",
 			AccessTTLSec:          300,
 			RefreshTTLSec:         600,
 			AccessSecret:          "access-secret",
@@ -141,9 +141,9 @@ func TestManagerRejectsTokenWithUnexpectedAudience(t *testing.T) {
 
 func TestManagerAcceptsPreviousSecretsDuringRotation(t *testing.T) {
 	rotatedCfg := &config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 		JWT: config.JWTConfig{
-			Issuer:                "gin-boilerplate",
+			Issuer:                "gin-core",
 			AccessTTLSec:          300,
 			RefreshTTLSec:         600,
 			AccessSecret:          "new-access-secret",
@@ -153,9 +153,9 @@ func TestManagerAcceptsPreviousSecretsDuringRotation(t *testing.T) {
 		},
 	}
 	legacyManager := NewManager(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 		JWT: config.JWTConfig{
-			Issuer:        "gin-boilerplate",
+			Issuer:        "gin-core",
 			AccessTTLSec:  300,
 			RefreshTTLSec: 600,
 			AccessSecret:  "old-access-secret",
@@ -195,9 +195,9 @@ func TestManagerAcceptsPreviousSecretsDuringRotation(t *testing.T) {
 
 func newTestManager() *Manager {
 	cfg := &config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate"},
+		App: config.AppConfig{Name: "gin-core"},
 		JWT: config.JWTConfig{
-			Issuer:                "gin-boilerplate",
+			Issuer:                "gin-core",
 			AccessTTLSec:          300,
 			RefreshTTLSec:         600,
 			AccessSecret:          "access-secret",

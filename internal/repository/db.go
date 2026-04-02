@@ -3,9 +3,9 @@ package repository
 import (
 	"time"
 
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	"github.com/possibities/gin-boilerplate/pkg/metrics"
-	pkgtracing "github.com/possibities/gin-boilerplate/pkg/tracing"
+	"github.com/possibities/gin-core/pkg/config"
+	"github.com/possibities/gin-core/pkg/metrics"
+	pkgtracing "github.com/possibities/gin-core/pkg/tracing"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"

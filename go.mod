@@ -1,4 +1,4 @@
-module github.com/possibities/gin-boilerplate
+module github.com/possibities/gin-core
 
 go 1.24.0
 

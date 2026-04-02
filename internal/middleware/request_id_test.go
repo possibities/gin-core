@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkglogger "github.com/possibities/gin-boilerplate/pkg/logger"
-	pkgtracing "github.com/possibities/gin-boilerplate/pkg/tracing"
+	"github.com/possibities/gin-core/pkg/config"
+	pkglogger "github.com/possibities/gin-core/pkg/logger"
+	pkgtracing "github.com/possibities/gin-core/pkg/tracing"
 	"go.opentelemetry.io/otel/trace"
 	"go.uber.org/zap"
 )
@@ -72,7 +72,7 @@ func TestTracingUsesRequestTraceIDAsSpanTraceID(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	provider, cleanup, err := pkgtracing.New(&config.Config{
-		App: config.AppConfig{Name: "gin-boilerplate", Env: "test"},
+		App: config.AppConfig{Name: "gin-core", Env: "test"},
 		Tracing: config.TracingConfig{
 			Enabled:     true,
 			SampleRatio: 1,

@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	pkgi18n "github.com/possibities/gin-boilerplate/pkg/i18n"
+	pkgi18n "github.com/possibities/gin-core/pkg/i18n"
 )
 
 func Locale(translator *pkgi18n.Translator) gin.HandlerFunc {

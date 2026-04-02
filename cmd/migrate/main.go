@@ -8,8 +8,8 @@ import (
 	"os"
 
 	migratepkg "github.com/golang-migrate/migrate/v4"
-	"github.com/possibities/gin-boilerplate/internal/migration"
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	"github.com/possibities/gin-core/internal/migration"
+	"github.com/possibities/gin-core/pkg/config"
 )
 
 func main() {

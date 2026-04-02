@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/internal/worker"
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	"github.com/possibities/gin-core/internal/worker"
+	"github.com/possibities/gin-core/pkg/config"
 	"go.uber.org/zap"
 )
 

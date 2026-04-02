@@ -3,7 +3,7 @@ package pkglogger
 import (
 	"os"
 
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	"github.com/possibities/gin-core/pkg/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

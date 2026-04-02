@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/possibities/gin-boilerplate/internal/event"
-	"github.com/possibities/gin-boilerplate/internal/model"
+	"github.com/possibities/gin-core/internal/event"
+	"github.com/possibities/gin-core/internal/model"
 )
 
 const userProfileUpdatedTopic = "user.profile.updated"

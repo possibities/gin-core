@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/possibities/gin-boilerplate/internal/handler"
-	"github.com/possibities/gin-boilerplate/pkg/config"
+	"github.com/possibities/gin-core/internal/handler"
+	"github.com/possibities/gin-core/pkg/config"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
 )

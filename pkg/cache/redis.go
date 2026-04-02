@@ -3,8 +3,8 @@ package cache
 import (
 	"time"
 
-	"github.com/possibities/gin-boilerplate/pkg/config"
-	pkgtracing "github.com/possibities/gin-boilerplate/pkg/tracing"
+	"github.com/possibities/gin-core/pkg/config"
+	pkgtracing "github.com/possibities/gin-core/pkg/tracing"
 	"github.com/redis/go-redis/v9"
 )
 

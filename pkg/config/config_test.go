@@ -23,7 +23,7 @@ db:
   host: 127.0.0.1
   port: 5432
   user: postgres
-  name: gin_boilerplate
+  name: gin_core
   ssl_mode: disable
   max_open_conns: 25
   max_idle_conns: 12
@@ -40,7 +40,7 @@ cache:
   null_ttl_sec: 30
   ttl_jitter_sec: 60
 jwt:
-  issuer: gin-boilerplate
+  issuer: gin-core
 log:
   level: info
   encoding: json
@@ -96,7 +96,7 @@ db:
   host: 127.0.0.1
   port: 5432
   user: postgres
-  name: gin_boilerplate
+  name: gin_core
   ssl_mode: disable
   max_open_conns: 25
   max_idle_conns: 12
@@ -136,7 +136,7 @@ db:
   host: 127.0.0.1
   port: 5432
   user: postgres
-  name: gin_boilerplate
+  name: gin_core
   ssl_mode: disable
   max_open_conns: 25
   max_idle_conns: 12
@@ -153,7 +153,7 @@ cache:
   null_ttl_sec: 30
   ttl_jitter_sec: 60
 jwt:
-  issuer: gin-boilerplate
+  issuer: gin-core
   access_secret: should-not-be-here
   previous_access_secret: should-not-be-here-either
 log:
@@ -186,7 +186,7 @@ storage:
 func TestValidateRejectsNonJSONEncoding(t *testing.T) {
 	cfg := &Config{
 		App: AppConfig{
-			Name:               "gin-boilerplate",
+			Name:               "gin-core",
 			Port:               8080,
 			ReadTimeoutSec:     10,
 			WriteTimeoutSec:    10,
@@ -196,7 +196,7 @@ func TestValidateRejectsNonJSONEncoding(t *testing.T) {
 			Host:               "127.0.0.1",
 			Port:               5432,
 			User:               "postgres",
-			Name:               "gin_boilerplate",
+			Name:               "gin_core",
 			SSLMode:            "disable",
 			DialTimeoutSec:     2,
 			MaxOpenConns:       25,
@@ -221,7 +221,7 @@ func TestValidateRejectsNonJSONEncoding(t *testing.T) {
 			TTLJitterSec: 60,
 		},
 		JWT: JWTConfig{
-			Issuer:        "gin-boilerplate",
+			Issuer:        "gin-core",
 			AccessTTLSec:  7200,
 			RefreshTTLSec: 604800,
 			AccessSecret:  "access-secret",
@@ -266,7 +266,7 @@ func TestValidateRejectsNonJSONEncoding(t *testing.T) {
 func TestValidateRejectsInvalidMigrationConfig(t *testing.T) {
 	cfg := &Config{
 		App: AppConfig{
-			Name:               "gin-boilerplate",
+			Name:               "gin-core",
 			Port:               8080,
 			ReadTimeoutSec:     10,
 			WriteTimeoutSec:    10,
@@ -276,7 +276,7 @@ func TestValidateRejectsInvalidMigrationConfig(t *testing.T) {
 			Host:               "127.0.0.1",
 			Port:               5432,
 			User:               "postgres",
-			Name:               "gin_boilerplate",
+			Name:               "gin_core",
 			SSLMode:            "disable",
 			DialTimeoutSec:     2,
 			MaxOpenConns:       25,
@@ -301,7 +301,7 @@ func TestValidateRejectsInvalidMigrationConfig(t *testing.T) {
 			TTLJitterSec: 60,
 		},
 		JWT: JWTConfig{
-			Issuer:        "gin-boilerplate",
+			Issuer:        "gin-core",
 			AccessTTLSec:  7200,
 			RefreshTTLSec: 604800,
 			AccessSecret:  "access-secret",
@@ -346,7 +346,7 @@ func TestValidateRejectsInvalidMigrationConfig(t *testing.T) {
 func TestValidateRejectsInvalidCacheConfig(t *testing.T) {
 	cfg := &Config{
 		App: AppConfig{
-			Name:               "gin-boilerplate",
+			Name:               "gin-core",
 			Port:               8080,
 			ReadTimeoutSec:     10,
 			WriteTimeoutSec:    10,
@@ -356,7 +356,7 @@ func TestValidateRejectsInvalidCacheConfig(t *testing.T) {
 			Host:               "127.0.0.1",
 			Port:               5432,
 			User:               "postgres",
-			Name:               "gin_boilerplate",
+			Name:               "gin_core",
 			SSLMode:            "disable",
 			DialTimeoutSec:     2,
 			MaxOpenConns:       25,
@@ -381,7 +381,7 @@ func TestValidateRejectsInvalidCacheConfig(t *testing.T) {
 			TTLJitterSec: -1,
 		},
 		JWT: JWTConfig{
-			Issuer:        "gin-boilerplate",
+			Issuer:        "gin-core",
 			AccessTTLSec:  7200,
 			RefreshTTLSec: 604800,
 			AccessSecret:  "access-secret",
@@ -426,7 +426,7 @@ func TestValidateRejectsInvalidCacheConfig(t *testing.T) {
 func TestValidateRejectsInvalidWorkerConfig(t *testing.T) {
 	cfg := &Config{
 		App: AppConfig{
-			Name:               "gin-boilerplate",
+			Name:               "gin-core",
 			Port:               8080,
 			ReadTimeoutSec:     10,
 			WriteTimeoutSec:    10,
@@ -436,7 +436,7 @@ func TestValidateRejectsInvalidWorkerConfig(t *testing.T) {
 			Host:               "127.0.0.1",
 			Port:               5432,
 			User:               "postgres",
-			Name:               "gin_boilerplate",
+			Name:               "gin_core",
 			SSLMode:            "disable",
 			DialTimeoutSec:     2,
 			MaxOpenConns:       25,
@@ -460,7 +460,7 @@ func TestValidateRejectsInvalidWorkerConfig(t *testing.T) {
 			TTLJitterSec: 60,
 		},
 		JWT: JWTConfig{
-			Issuer:        "gin-boilerplate",
+			Issuer:        "gin-core",
 			AccessTTLSec:  7200,
 			RefreshTTLSec: 604800,
 			AccessSecret:  "access-secret",
@@ -505,7 +505,7 @@ func TestValidateRejectsInvalidWorkerConfig(t *testing.T) {
 func TestValidateRejectsInvalidStorageConfig(t *testing.T) {
 	cfg := &Config{
 		App: AppConfig{
-			Name:               "gin-boilerplate",
+			Name:               "gin-core",
 			Port:               8080,
 			ReadTimeoutSec:     10,
 			WriteTimeoutSec:    10,
@@ -515,7 +515,7 @@ func TestValidateRejectsInvalidStorageConfig(t *testing.T) {
 			Host:               "127.0.0.1",
 			Port:               5432,
 			User:               "postgres",
-			Name:               "gin_boilerplate",
+			Name:               "gin_core",
 			SSLMode:            "disable",
 			DialTimeoutSec:     2,
 			MaxOpenConns:       25,
@@ -539,7 +539,7 @@ func TestValidateRejectsInvalidStorageConfig(t *testing.T) {
 			TTLJitterSec: 60,
 		},
 		JWT: JWTConfig{
-			Issuer:        "gin-boilerplate",
+			Issuer:        "gin-core",
 			AccessTTLSec:  7200,
 			RefreshTTLSec: 604800,
 			AccessSecret:  "access-secret",
