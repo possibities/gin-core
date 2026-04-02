@@ -52,17 +52,25 @@ type TracingConfig struct {
 }
 
 type DBConfig struct {
-	Host               string `mapstructure:"host"`
-	Port               int    `mapstructure:"port"`
-	User               string `mapstructure:"user"`
-	Password           string `mapstructure:"password"`
-	Name               string `mapstructure:"name"`
-	SSLMode            string `mapstructure:"ssl_mode"`
-	DialTimeoutSec     int    `mapstructure:"dial_timeout_sec"`
-	MaxOpenConns       int    `mapstructure:"max_open_conns"`
-	MaxIdleConns       int    `mapstructure:"max_idle_conns"`
-	ConnMaxLifetimeSec int    `mapstructure:"conn_max_lifetime_sec"`
-	ConnMaxIdleTimeSec int    `mapstructure:"conn_max_idle_time_sec"`
+	Host               string      `mapstructure:"host"`
+	Port               int         `mapstructure:"port"`
+	User               string      `mapstructure:"user"`
+	Password           string      `mapstructure:"password"`
+	Name               string      `mapstructure:"name"`
+	SSLMode            string      `mapstructure:"ssl_mode"`
+	DialTimeoutSec     int         `mapstructure:"dial_timeout_sec"`
+	MaxOpenConns       int         `mapstructure:"max_open_conns"`
+	MaxIdleConns       int         `mapstructure:"max_idle_conns"`
+	ConnMaxLifetimeSec int         `mapstructure:"conn_max_lifetime_sec"`
+	ConnMaxIdleTimeSec int         `mapstructure:"conn_max_idle_time_sec"`
+	Replicas           []DBReplica `mapstructure:"replicas"`
+}
+
+type DBReplica struct {
+	Host     string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	User     string `mapstructure:"user"`
+	Password string `mapstructure:"password"`
 }
 
 type RedisConfig struct {
@@ -528,6 +536,37 @@ func (c DBConfig) DSN() string {
 	}
 	if c.Password != "" {
 		parts = append(parts, "password="+c.Password)
+	}
+	return strings.Join(parts, " ")
+}
+
+func (r DBReplica) DSN(base DBConfig) string {
+	host := r.Host
+	if host == "" {
+		host = base.Host
+	}
+	port := r.Port
+	if port == 0 {
+		port = base.Port
+	}
+	user := r.User
+	if user == "" {
+		user = base.User
+	}
+	password := r.Password
+	if password == "" {
+		password = base.Password
+	}
+	parts := []string{
+		"host=" + host,
+		"port=" + strconv.Itoa(port),
+		"user=" + user,
+		"dbname=" + base.Name,
+		"sslmode=" + base.SSLMode,
+		"connect_timeout=" + strconv.Itoa(base.DialTimeoutSec),
+	}
+	if password != "" {
+		parts = append(parts, "password="+password)
 	}
 	return strings.Join(parts, " ")
 }

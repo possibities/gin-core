@@ -8,6 +8,7 @@ import (
 	pkgtracing "github.com/possibities/gin-boilerplate/pkg/tracing"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/plugin/dbresolver"
 )
 
 func NewDB(cfg *config.Config, tracingProvider *pkgtracing.Provider, metricsRegistry *metrics.Registry) (*gorm.DB, func(), error) {
@@ -17,6 +18,24 @@ func NewDB(cfg *config.Config, tracingProvider *pkgtracing.Provider, metricsRegi
 	if err != nil {
 		return nil, nil, err
 	}
+
+	if len(cfg.DB.Replicas) > 0 {
+		replicas := make([]gorm.Dialector, 0, len(cfg.DB.Replicas))
+		for _, r := range cfg.DB.Replicas {
+			replicas = append(replicas, postgres.Open(r.DSN(cfg.DB)))
+		}
+		if err := db.Use(dbresolver.Register(dbresolver.Config{
+			Replicas: replicas,
+			Policy:   dbresolver.RandomPolicy{},
+		}).SetMaxOpenConns(cfg.DB.MaxOpenConns).
+			SetMaxIdleConns(cfg.DB.MaxIdleConns).
+			SetConnMaxLifetime(time.Duration(cfg.DB.ConnMaxLifetimeSec) * time.Second).
+			SetConnMaxIdleTime(time.Duration(cfg.DB.ConnMaxIdleTimeSec) * time.Second),
+		); err != nil {
+			return nil, nil, err
+		}
+	}
+
 	if err := pkgtracing.RegisterGORMCallbacks(db, tracingProvider, metricsRegistry); err != nil {
 		return nil, nil, err
 	}
